@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Josefin+Sans:ital,wght@0,700;1,400&family=Lexend+Deca&family=Overpass&family=Roboto:wght@400;700&family=Rubik:wght@500&display=swap');
+
+body, a {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto;
+    font-size: 13px;
+}
+
+h1, h2, h3 {
+    font-weight: 400;
+}
+
+hr.vertical {
+    width: 1px;
+    background-color: rgba(128, 128, 128, 0.29);
+    border: none;
+}
+
+hr.horizontal {
+    height: 1px;
+    background-color: rgba(128, 128, 128, 0.29);
+    border: none;
+}
+
+.discuss {
+
+    display: flex;
+    padding: 10px;
+    flex-grow: 5;
+}
+
+.mg {
+    margin: 7px 0 0 0;
+}
+
+.left {
+
+    display: flex;
+    flex-flow: column;
+    flex-grow: 3;
+    align-items: end;
+    margin-right: 15px;
+    max-width: 120px;
+
+}
+
+.right {
+
+    display: flex;
+    flex-flow: column;
+    flex-grow: 7;
+    justify-content: start;
+    max-width: 620px;
+
+}
+
+
+.title {
+    margin-right: 15px;
+    font-size: 17px;
+}
+
+
+.below-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.whole-page {
+    display: flex;
+    justify-content: center;
+}
+
+.navbar {
+    display: flex;
+    flex-flow: column;
+    margin-left: 10px;
+}
+
+.button {
+    background-color: #0a94fe;
+    border-radius: 7px;
+    color: white;
+    border: none;
+    align-items: center;
+    display: flex;
+    padding: 10px;
+    height: 20px;
+}
+
+.flex-container {
+
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.tags a {
+    background: hsl(205, 46%, 92%, 1);
+    color: hsl(205, 47%, 42%, 1);
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+}
+
+.tags a:hover {
+    color: hsl(205, 46%, 32%, 1);
+    background-color: hsl(205, 53%, 88%, 1);
+    cursor: pointer;
+}
+
+.buttons a {
+
+    border: none;
+    padding: 10px;
+    background: white;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    color: black;
+}
+
+.buttons {
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    border-radius: 7px;
+
+}
+
+
+hr {
+    padding: 0;
+    margin: 0;
+}
+
+.filter {
+    margin: 0 0 0 10px;
+    border: 1px solid hsl(205, 47%, 42%, 1);
+    background-color: white;
+    border-radius: 7px;
+    color: hsl(205, 47%, 42%, 1);
+    display: flex;
+    align-items: center;
+}
+
+.buttons a:hover {
+    background-color: rgba(185, 180, 180, 0.1);
+    cursor: pointer;
+}
+
+.filter:hover {
+    background: hsla(204, 50%, 43%, 0.32);
+}
+
+.filter_text {
+    border-radius: 5px;
+    border: 1px solid rgba(128, 128, 128, 0.47);
+    display: flex;
+    align-items: center;
+}
+
+.tag-outer-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    border: 1px solid rgba(128, 128, 128, 0.48);
+    border-radius: 5px;
+
+    padding: 20px 10px 10px 10px;
+    margin: 0 10px 10px 0;
+    min-width: 200px;
+}
+
+.whole-tag-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+a.navbar {
+    font-size: 13px;
+}
+
+.qtu {
+    display: flex;
+    flex-flow: column;
+
+}
+
+.navbar a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+}
+
+.orange-column {
+    width: 3px;
+    height: 30px;
+    background-color: #e67b23;
+}
+
+.whole-user-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.user {
+    display: flex;
+    margin: 15px;
+
+}

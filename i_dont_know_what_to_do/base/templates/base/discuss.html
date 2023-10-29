@@ -1,0 +1,46 @@
+{% for item in discuss%}
+
+<hr class="horizontal">
+
+<div class="discuss">
+
+    <div class="left">
+
+        <div class="mg">{{ item.votes }} votes</div>
+        <div class="mg">{{ item.answer_set.all.count }} answers</div>
+        <div class="mg">{{ item.views.all.count }} views</div>
+
+    </div>
+
+    <div class="right">
+
+        <a href="{% url 'discuss_room' item.id%}" class="title">{{item.title}}</a><br>
+
+
+        <div>{{ item.body|truncatechars:150 }}</div>
+        <br>
+
+        <div class="below-title">
+
+            <div class="tags">
+                {% for tag in item.topics.all %}
+
+                <a> {{ tag|lower }}</a>
+
+                {% endfor %}
+            </div>
+
+            <div class="user-time">
+                <a></a>
+                <div></div>
+                <a> {{item.user}} asked {{ item.created|timesince }} ago</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endfor %}

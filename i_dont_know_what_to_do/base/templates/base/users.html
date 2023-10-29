@@ -1,0 +1,72 @@
+{% load static %}
+{% include 'head.html' %}
+
+<div class="whole-page">
+
+    <div style="max-width: 170px;min-width: 170px">
+        {% include 'navbar.html' %}
+    </div>
+    <hr class="vertical">
+
+
+    <div style="flex-grow: 1">
+
+        <h1 style="margin: 30px">Users</h1>
+
+        <div style="display: flex;flex-flow: column;margin: 30px">
+
+            <form method="GET">
+
+                <div class="flex-container" style="margin: 15px 0 15px;padding: 0">
+
+                    <div class="filter_text">
+                        <img style="margin: 0 5px" alt="search" src="{% static 'images/search.png' %}"/>
+                        <input style="
+                    padding: 10px 0;
+                    border:none;
+                    outline: none;
+                    max-width: 150px" type="text" name="filter" placeholder="Filter by user"/>
+                    </div>
+
+                    <div style="display:flex;margin: 0 10px 0 0" class="buttons">
+                        <a href="{% url 'users' %}?filter=reputation" id="btReputation">Reputation</a>
+                        <hr>
+                        <a href="{% url 'users' %}?filter=newuser" id="btNewUsers">New users</a>
+                        <hr>
+                        <a href="{% url 'users' %}?filter=voters" id="btVoters">Voters</a>
+                        <hr>
+                        <a href="{% url 'users' %}?filter=editors" id="btEditors">Editors</a>
+                        <hr>
+                        <a href="{% url 'users' %}?filter=moderators" id="btModerators">Moderators</a>
+                    </div>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+        <div class="whole-user-container">
+
+            {% for item in users %}
+
+            <div class="user">
+                <div style="background: black;border-radius: 3px;height: 45px;width: 45px"></div>
+                <div style="display: flex;flex-flow: column;margin-left: 5px">
+                    <a>{{item}}</a>
+                    <div>Turkey,Istanbul</div>
+                    <div>{{amountOfQuestions.}}</div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="{% static 'js/index.js' %}"></script>
+

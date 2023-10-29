@@ -1,0 +1,90 @@
+{% load static %}
+
+{% include 'head.html' %}
+
+<div class="navbar">
+
+    {% if whichSelected == 'home' %}
+
+    <a style="background: rgba(100,107,116,0.15);" href="{% url 'home' %}">
+        <div style="font-weight: bold">Home</div>
+        <div style="display:block;" class="orange-column"></div>
+    </a>
+    {% else %}
+
+    <a href="{% url 'home' %}">
+        <div>Home</div>
+        <div style="display:none;" class="orange-column"></div>
+    </a>
+
+    {% endif %}
+    <br>
+    <div style="font-size: 11px;color: #646b74">PUBLIC</div>
+
+    <div class="qtu">
+
+        {% if whichSelected == 'questions' %}
+
+        <a style="background: rgba(100,107,116,0.15)" href="{% url 'questions' %}">
+
+            <div style="display:flex;">
+                <img style="margin-right: 5px;margin-left: 10px;width: 18px;height: 18px"
+                     src="{% static '/images/public.png' %}"
+                     alt="world"/>
+                <div style="font-weight: bold;">Questions</div>
+            </div>
+
+            <div style="display:block;" class="orange-column"></div>
+
+        </a>
+        {% else %}
+
+        <a href="{% url 'questions' %}">
+
+            <div style="display:flex;">
+                <img style="margin-left: 10px;margin-right: 5px;width: 18px;height: 18px"
+                     src="{% static '/images/public.png' %}"
+                     alt="world"/>
+                <div>Questions</div>
+            </div>
+
+            <div style="display:none;" class="orange-column"></div>
+
+        </a>
+
+        {% endif %}
+
+        {% if whichSelected == 'Tags' %}
+
+        <a style="background: rgba(100,107,116,0.15)" href="{% url 'tags' %}">
+            <div style="margin-left: 35px;font-weight: bold">Tags</div>
+            <div style="display:block;" class="orange-column"></div>
+        </a>
+        {% else %}
+
+        <a href="{% url 'tags' %}">
+            <div style="margin-left: 35px">Tags</div>
+            <div style="display:none;" class="orange-column"></div>
+        </a>
+
+        {% endif %}
+
+        {% if whichSelected == 'Users' %}
+
+        <a style="background: rgba(100,107,116,0.15)" href="{% url 'users' %}">
+            <div style="margin-left: 35px;font-weight: bold">Users</div>
+            <div style="display:block;" class="orange-column"></div>
+        </a>
+        {% else %}
+
+        <a href="{% url 'users' %}">
+            <div style="margin-left: 35px">Users</div>
+            <div style="display:none;" class="orange-column"></div>
+        </a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+

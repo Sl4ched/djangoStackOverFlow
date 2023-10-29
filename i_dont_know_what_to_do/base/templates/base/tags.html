@@ -1,0 +1,92 @@
+{% include 'head.html' %}
+{% load static %}
+<div class="whole-page">
+    <div style="flex-grow: 3;max-width: 170px;min-width: 170px">{% include 'navbar.html' %}</div>
+    <hr class="vertical">
+
+    <div style="flex-grow: 7;padding:20px;max-width: 1100px">
+
+        <h1>Tags</h1>
+
+        <div style="display: flex;max-width: 623px;font-size: 15px">
+            A tag is a keyword or label that categorizes your question with other,
+            similar questions. Using the right
+            tags makes it easier for others to find and answer your question.
+        </div>
+
+
+        <div style="display: flex;flex-flow: column;">
+
+            <form method="GET">
+
+                <div class="flex-container" style="margin: 15px 0 15px;padding: 0">
+
+                    <div class="filter_text">
+                        <img style="margin: 0 5px" alt="search" src="{% static 'images/search.png' %}"/>
+                        <input style="
+                    padding: 10px 0;
+                    border:none;
+                    outline: none;
+                    max-width: 150px" type="text" name="filter" placeholder="Filter by tag name"/>
+                    </div>
+
+                    <div style="display:flex;margin: 0 10px 0 0" class="buttons">
+                        <a href="{% url 'tags' %}?filter=popular" id="btPopular">Popular</a>
+                        <hr>
+                        <a href="{% url 'tags' %}?filter=name" id="btName">Name</a>
+                        <hr>
+                        <a href="{% url 'tags' %}?filter=new" id="btNew2">New</a>
+                    </div>
+
+                </div>
+
+
+            </form>
+
+            <div class="whole-tag-container"> <!-- repeated structure -->
+
+                {% for tag in tags %} <!-- for starts here -->
+
+                <div class="tag-outer-container">
+
+                    <div class="tags"><a> {{ tag|lower }}</a></div>
+                    <br>
+
+
+                    <div style="display: flex;max-width: 230px;flex-wrap: wrap">{{tag.tag_body|truncatechars:120}}</div>
+                    <br>
+
+
+                    <div style="display: flex;justify-content: space-between;color: rgb(99,107,116)">
+
+                        <div>
+
+                            {% if tag.tag_count != None %}
+                            <div>{{ tag.tag_count }} questions</div>
+
+                            {% else %}
+                            <div>0 questions</div>
+
+                            {% endif %}
+
+                        </div>
+
+                        <div>{{ tag.created|timesince }}</div>
+
+                    </div>
+
+
+                </div>
+
+                {% endfor %} <!-- for end here -->
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script src="{% static 'js/index.js' %}"></script>

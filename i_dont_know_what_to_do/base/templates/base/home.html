@@ -1,0 +1,26 @@
+{% include 'head.html' %}
+
+
+<body>
+
+
+<div>
+    {% if user.is_authenticated %}
+    <div>Hello {{ user }}</div>
+    <a href="{% url 'logout' %}">logout</a>
+    {% else %}
+    <a href="{% url 'login' %}"> login</a>
+    <a href="{% url 'register' %}">register</a>
+    {% endif %}
+</div>
+<hr class="horizontal">
+<br>
+
+<div style="display:flex;height: 100%">
+    <div style="max-width: 170px;min-width: 170px">{% include 'navbar.html' %}</div>
+    <hr class="vertical">
+
+</div>
+
+
+</body>

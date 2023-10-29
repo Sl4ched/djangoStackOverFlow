@@ -1,0 +1,32 @@
+{% include 'head.html' %}
+
+<div class="whole-page">
+
+    <div style="flex-grow: 2">
+        {% include 'navbar.html' %}
+    </div>
+
+    <div style="flex-grow: 5;max-width: 751px">
+
+        <h1>{{ specified_discuss.title }}</h1><br>
+        <div>Asked {{ specified_discuss.created|timesince}} Modified {{specified_discuss.updated|timesince}} Viewed
+            {{specified_discuss.views.all.count}} times
+        </div>
+        <br>
+
+        <div>{{ specified_discuss.body }}</div>
+        <br>
+
+        <div class="tags">
+            {% for tag in specified_discuss.topics.all %}
+
+            <a> {{ tag|lower }}</a>
+
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <div style="flex-grow: 3">3</div>
+
+</div>

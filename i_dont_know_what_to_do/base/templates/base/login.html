@@ -1,0 +1,32 @@
+{% include 'head.html' %}
+
+<div>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <label for="mail">E-mail:</label>
+        <input required="required" id="mail" name="mail" type="email">
+
+        <label for="password">Password:</label>
+        <input required="required" id="password" name="password" type="password">
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+    <div>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li
+            {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'register' %}">Create account</a>
+
+</div>

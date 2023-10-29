@@ -1,0 +1,34 @@
+{% load static %}
+
+<div>
+
+    <div class="flex-container">
+        <h1>All Questions</h1>
+        <a href="{% url 'create_discuss' %}" class="button">Ask Question</a>
+    </div>
+
+    <div class="flex-container">
+        <div>{{ discuss.count }} questions</div>
+
+        <div style="display:flex;">
+
+            <div style="display:flex;" class="buttons">
+                <a href="{% url 'questions'%}?filter=newest" id="btNew">Newest</a>
+                <hr>
+                <a href="{% url 'questions'%}?filter=active" id="btActive">Active</a>
+                <hr>
+                <a href="{% url 'questions'%}?filter=bountied" id="btBountied">Bountied</a>
+                <hr>
+                <a href="{% url 'questions'%}?filter=unanswered" id="btUnanswered">Unanswered</a>
+            </div>
+
+
+            <button id="btFilter" class="filter">
+                <img style="height: 20px;margin-right: 3px" alt="filter" src="{% static 'images/filter.png' %}"/>
+                Filter
+            </button>
+        </div>
+
+    </div>
+
+</div>
