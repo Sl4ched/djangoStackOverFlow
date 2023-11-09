@@ -1,5 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+
+
+class MyUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    quantity = models.IntegerField(null=True, blank=True)
+
+    def __int__(self):
+        return self.quantity
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        MyUser.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.myuser.save()
 
 
 class Tag(models.Model):
@@ -33,7 +54,7 @@ class Discuss(models.Model):
 
 
 class Answer(models.Model):
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(MyUser, null=True, on_delete=models.SET_NULL)
 
     discuss = models.ForeignKey(Discuss, null=True, on_delete=models.CASCADE)
     body = models.CharField(max_length=200, null=True)

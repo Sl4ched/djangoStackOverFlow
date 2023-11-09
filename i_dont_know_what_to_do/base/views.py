@@ -20,8 +20,8 @@ def logout_page(request):
 def login_page(request):
     if request.method == 'POST':
 
-        mail = request.POST['mail']
-        password = request.POST['password']
+        mail = request.POST.get('mail')
+        password = request.POST.get('password')
 
         user = authenticate(username=mail, password=password)
 
@@ -44,17 +44,15 @@ def register_page(request):
     }
 
     if request.method == 'POST':
-        username = request.POST['mail']
-        password = request.POST['password']
-        password_confirmation = request.POST['password2']
 
-        if password_confirmation == password:
-            user = User.objects.create_user(
-                username=username,
-                password=password)
+        username = request.POST.get('mail')
+        password = request.POST.get('password')
+        password_confirmation = request.POST.get('password2') == password
+
+        if password_confirmation:
+            user = User.objects.create_user(username=username, password=password)
 
             login(request, user)
-
             return redirect('home')
         else:
             messages.error(request, 'Passwords must be the same')
@@ -64,7 +62,7 @@ def register_page(request):
 
 def home(request):
     context = {
-        'title': 'Home',
+        'title': 'Stack Overflow - Where Developers Learn, Share & Build Careers',
         'whichSelected': 'home'
     }
 
@@ -80,7 +78,7 @@ def questions(request):
         discuss = Discuss.objects.all()
 
     context = {
-        'title': 'Questions',
+        'title': 'Questions - StackOverflow',
         'discuss': discuss,
         'whichSelected': 'questions'
     }
@@ -119,7 +117,7 @@ def tags(request):
 
         )
     context = {
-        'title': 'Tags',
+        'title': 'Tags - StackOverflow',
         'tags': whole_tags,
         'whichSelected': 'Tags'
 
@@ -128,7 +126,8 @@ def tags(request):
 
 
 def users(request):
-    users = User.objects.all()
+    filter_query = request.GET.get('filter') if request.GET.get('filter') is not None else "reputation"
+
     discuss = Discuss.objects.all()
 
     temp_dict = {}
@@ -139,13 +138,32 @@ def users(request):
     for item in discuss:
         temp_dict[str(item.user)] += 1
 
-    context = {
-        'title': 'Users',
-        'whichSelected': 'Users',
-        'users': users,
-        'amountOfQuestions': temp_dict
+    for key, value in temp_dict.items():
+        user = User.objects.get(username=key)
+        user.myuser.quantity = value
+        user.save()
 
+    if filter_query == 'reputation':
+        user_datas = User.objects.order_by('-myuser__quantity')
+    elif filter_query == 'newuser':
+        user_datas = User.objects.order_by('-date_joined')
+    elif filter_query == 'voters':
+        user_datas = User.objects.all()
+    elif filter_query == 'editors':
+        user_datas = User.objects.all()
+    elif filter_query == 'moderators':
+        user_datas = User.objects.all()
+    else:
+        user_datas = User.objects.filter(
+            Q(username__startswith=filter_query)
+        )
+
+    context = {
+        'title': 'Users - StackOverflow',
+        'whichSelected': 'Users',
+        'users': user_datas,
     }
+
     return render(request, 'base/users.html', context=context)
 
 

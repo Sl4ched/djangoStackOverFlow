@@ -1,6 +1,10 @@
 {% load static %}
 {% include 'head.html' %}
 
+<div>
+    {% include 'upperNavbar.html' %}
+</div>
+
 <div class="whole-page">
 
     <div style="max-width: 170px;min-width: 170px">
@@ -8,8 +12,7 @@
     </div>
     <hr class="vertical">
 
-
-    <div style="flex-grow: 1">
+    <div style="flex-grow: 1;max-width: 1100px">
 
         <h1 style="margin: 30px">Users</h1>
 
@@ -52,11 +55,19 @@
             {% for item in users %}
 
             <div class="user">
-                <div style="background: black;border-radius: 3px;height: 45px;width: 45px"></div>
-                <div style="display: flex;flex-flow: column;margin-left: 5px">
-                    <a>{{item}}</a>
+                <div style="background: black;border-radius: 3px;height: 45px;width: 45px"></div> <!--user image-->
+                <div style="display: flex;flex-flow: column;margin-left: 8px">
+                    <a>{{item.username}}</a>
                     <div>Turkey,Istanbul</div>
-                    <div>{{amountOfQuestions.}}</div>
+
+                    <div style="font-size: 12px;color: #636b74">
+                        {% if item.myuser.quantity is not None %}
+                        <div>{{item.myuser.quantity}}</div>
+                        {% else %}
+                        <div>0</div>
+                        {% endif %}
+                    </div>
+
                 </div>
             </div>
 
@@ -65,6 +76,7 @@
         </div>
 
     </div>
+
 
 </div>
 

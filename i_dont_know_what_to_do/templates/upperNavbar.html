@@ -1,0 +1,47 @@
+{% load static %}
+<hr class="horizontal" style="background: #e67b23;height: 3px">
+
+<div class="upper-navbar">
+
+    <div>
+        <a class="stack-logo" href="{% url 'home' %}"><img style="width:150px"
+                                                           src="{% static '/images/logo-stackoverflow.png' %}"></a>
+    </div>
+
+    <div style="flex-grow: 5;margin: 0 10px;max-width: 780px;">
+        <form method="GET">
+            {% csrf_token %}
+            <div style="height: 33px" class="filter_text">
+                <img style="margin: 0 5px" alt="search" src="{% static 'images/search.png' %}"/>
+                <input style="
+                    padding: 7px 0;
+                    border:none;
+                    outline: none;flex-grow: 1" type="text" name="q" placeholder="Search..."/>
+            </div>
+        </form>
+    </div>
+
+    <div class="profile">
+        <div style="width: 25px;height: 25px;background: black;border-radius: 3px;margin: 18px 3px 18px 15px"></div>
+        <div style="margin-right: 10px;color: #636b74">1</div>
+    </div>
+
+    <div class="about-us">
+        <img alt="" style="width: 25px;height: 25px;margin: 18px" src="{% static 'images/help.png' %}">
+    </div>
+
+    <div class="account">
+        <img alt="" style="width: 25px;height: 25px;margin: 18px" src="{% static 'images/comment.png' %}">
+
+        <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+        </div>
+
+
+    </div>
+
+</div>
+<hr class="horizontal">
+<script src="{% static 'js/dropdown.js' %}"></script>

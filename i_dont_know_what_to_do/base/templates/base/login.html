@@ -1,32 +1,41 @@
 {% include 'head.html' %}
 
-<div>
+<div class="whole-page">
+    <div>{% include 'navbar.html' %}</div>
+    <hr class="vertical">
 
-    <form method="POST">
+    <div style="flex-grow: 1;margin-left: 20px">
 
-        {% csrf_token %}
+        <form method="POST">
 
-        <label for="mail">E-mail:</label>
-        <input required="required" id="mail" name="mail" type="email">
+            {% csrf_token %}
 
-        <label for="password">Password:</label>
-        <input required="required" id="password" name="password" type="password">
+            <label for="mail">E-mail:</label>
+            <input required="required" id="mail" name="mail" type="email">
 
-        <button type="submit">Submit</button>
+            <label for="password">Password:</label>
+            <input required="required" id="password" name="password" type="password">
 
-    </form>
+            <button type="submit">Submit</button>
 
-    <div>
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li
-            {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+        </form>
+
+        <div>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li
+                        {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+        <a href="{% url 'register' %}">Create account</a>
+
     </div>
 
-    <a href="{% url 'register' %}">Create account</a>
-
 </div>
+
+

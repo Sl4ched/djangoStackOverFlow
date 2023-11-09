@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Josefin+Sans:ital,wght@0,700;1,400&family=Lexend+Deca&family=Overpass&family=Roboto:wght@400;700&family=Rubik:wght@500&display=swap');
 
-body, a {
+
+body, a, form {
     margin: 0;
     padding: 0;
     text-decoration: none;
@@ -13,13 +14,14 @@ h1, h2, h3 {
 }
 
 hr.vertical {
-    width: 1px;
+    min-width: 1px;
+
     background-color: rgba(128, 128, 128, 0.29);
     border: none;
 }
 
 hr.horizontal {
-    height: 1px;
+    min-height: 1px;
     background-color: rgba(128, 128, 128, 0.29);
     border: none;
 }
@@ -56,12 +58,10 @@ hr.horizontal {
 
 }
 
-
 .title {
     margin-right: 15px;
     font-size: 17px;
 }
-
 
 .below-title {
     display: flex;
@@ -71,6 +71,7 @@ hr.horizontal {
 .whole-page {
     display: flex;
     justify-content: center;
+    min-height: 100%;
 }
 
 .navbar {
@@ -80,7 +81,7 @@ hr.horizontal {
 }
 
 .button {
-    background-color: #0a94fe;
+    background-color: #1b75cf;
     border-radius: 7px;
     color: white;
     border: none;
@@ -98,7 +99,7 @@ hr.horizontal {
 }
 
 .tags a {
-    background: hsl(205, 46%, 92%, 1);
+    background: hsl(210, 73%, 96%);
     color: hsl(205, 47%, 42%, 1);
     border-radius: 5px;
     padding: 5px;
@@ -128,7 +129,6 @@ hr.horizontal {
 
 }
 
-
 hr {
     padding: 0;
     margin: 0;
@@ -136,10 +136,10 @@ hr {
 
 .filter {
     margin: 0 0 0 10px;
-    border: 1px solid hsl(205, 47%, 42%, 1);
+    border: 1px solid hsl(210, 77%, 46%);
     background-color: white;
     border-radius: 7px;
-    color: hsl(205, 47%, 42%, 1);
+    color: hsl(210, 77%, 46%);
     display: flex;
     align-items: center;
 }
@@ -166,7 +166,7 @@ hr {
     justify-content: space-between;
     flex-wrap: wrap;
 
-    border: 1px solid rgba(128, 128, 128, 0.48);
+    border: 1px solid rgba(128, 128, 128, 0.27);
     border-radius: 5px;
 
     padding: 20px 10px 10px 10px;
@@ -211,4 +211,66 @@ a.navbar {
     display: flex;
     margin: 15px;
 
+}
+
+.upper-navbar {
+
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.stack-logo:hover {
+    background-color: rgba(99, 107, 116, 0.18);
+}
+
+.stack-logo {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.profile:hover {
+    background-color: rgba(99, 107, 116, 0.18);
+}
+
+.about-us:hover {
+    background-color: rgba(99, 107, 116, 0.18);
+}
+
+.account:hover {
+    background-color: rgba(99, 107, 116, 0.18);
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.account {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
 }
