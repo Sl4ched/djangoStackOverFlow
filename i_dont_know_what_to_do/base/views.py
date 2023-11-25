@@ -1,15 +1,12 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-
+from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-
-from django.contrib import messages
-from .models import Discuss, Tag, Answer
+from django.contrib.auth.models import User
+from django.db.models import Q
+from django.shortcuts import render, redirect
 
 from .forms import DiscussForm
-
-from django.db.models import Q
+from .models import Discuss, Tag
 
 
 def logout_page(request):
@@ -44,26 +41,45 @@ def register_page(request):
     }
 
     if request.method == 'POST':
-
-        username = request.POST.get('mail')
+        mail = request.POST.get('mail')
         password = request.POST.get('password')
-        password_confirmation = request.POST.get('password2') == password
+        username = request.POST.get('username')
 
-        if password_confirmation:
-            user = User.objects.create_user(username=username, password=password)
+        user = User.objects.create_user(username=mail, password=password)
 
-            login(request, user)
-            return redirect('home')
-        else:
-            messages.error(request, 'Passwords must be the same')
+        user.myuser.username = username
+        user.save()
+
+        login(request, user)
+        return redirect('home')
 
     return render(request, 'base/register.html', context=context)
 
 
 def home(request):
+    discuss = Discuss.objects.all()
+
+    all_tags = Tag.objects.all()
+
+    print(request.user)
+
+    if request.method == 'POST':
+        new_followed_tag = request.POST['added-tag']
+
+        current_user = request.user
+
+        ok = new_followed_tag.lower() in str(all_tags).lower()
+
+        if ok:
+            current_user.myuser.watchedTags.add(str(new_followed_tag))
+        else:
+            messages.error(request, f"{new_followed_tag} does not exist on this site.")
+
     context = {
         'title': 'Stack Overflow - Where Developers Learn, Share & Build Careers',
-        'whichSelected': 'home'
+        'whichSelected': 'home',
+        'discuss': discuss,
+
     }
 
     return render(request, 'base/home.html', context=context)
@@ -130,18 +146,7 @@ def users(request):
 
     discuss = Discuss.objects.all()
 
-    temp_dict = {}
-
-    for item in discuss:
-        temp_dict[str(item.user)] = 0
-
-    for item in discuss:
-        temp_dict[str(item.user)] += 1
-
-    for key, value in temp_dict.items():
-        user = User.objects.get(username=key)
-        user.myuser.quantity = value
-        user.save()
+    update_user()
 
     if filter_query == 'reputation':
         user_datas = User.objects.order_by('-myuser__quantity')
@@ -167,19 +172,20 @@ def users(request):
     return render(request, 'base/users.html', context=context)
 
 
-@login_required(login_url='home')
+@login_required(login_url='login')
 def discuss_room(request, id):
     specified_discuss = Discuss.objects.get(id=id)
     specified_discuss.views.add(request.user)  # added new user to views section
 
     context = {
         'specified_discuss': specified_discuss,
+        'whichSelected': 'questions'
     }
 
     return render(request, 'base/discuss_room.html', context=context)
 
 
-@login_required(login_url="home")
+@login_required(login_url="login")
 def create_discuss(request):
     template = 'base/create_discuss.html'
 
@@ -189,11 +195,13 @@ def create_discuss(request):
         form = DiscussForm(request.POST)
 
         if form.is_valid():
-            new_author = form.save(commit=False)
-            new_author.user = request.user
+            new_form = form.save(commit=False)
 
-            new_author.save()
+            new_form.user = request.user
+            new_form.save()
             form.save_m2m()
+
+            update_user()
 
             return redirect('questions')
 
@@ -202,3 +210,20 @@ def create_discuss(request):
         'form': form
     }
     return render(request, template, context=context)
+
+
+def update_user():
+    discuss = Discuss.objects.all()
+
+    temp_dict = {}
+
+    for item in discuss:
+        temp_dict[str(item.user)] = 0
+
+    for item in discuss:
+        temp_dict[str(item.user)] += 1
+
+    for key, value in temp_dict.items():
+        user = User.objects.get(username=key)
+        user.myuser.quantity = value
+        user.save()

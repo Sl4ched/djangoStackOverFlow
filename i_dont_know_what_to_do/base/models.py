@@ -4,25 +4,6 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 
 
-class MyUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    quantity = models.IntegerField(null=True, blank=True)
-
-    def __int__(self):
-        return self.quantity
-
-
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        MyUser.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.myuser.save()
-
-
 class Tag(models.Model):
     tags = models.CharField(max_length=50, null=True)
     tag_body = models.TextField(null=True, blank=True)
@@ -35,8 +16,29 @@ class Tag(models.Model):
         return self.tags
 
 
+class MyUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    quantity = models.IntegerField(null=True, blank=True)
+    username = models.CharField(max_length=100, null=True, blank=False)
+    watchedTags = models.ManyToManyField(Tag, null=True, related_name='watchedTag')
+
+    def __int__(self):
+        return self.quantity
+
+
+@receiver(post_save, sender=User)
+def create_user_myuser(sender, instance, created, **kwargs):
+    if created:
+        MyUser.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_myuser(sender, instance, **kwargs):
+    instance.myuser.save()
+
+
 class Discuss(models.Model):
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
     topics = models.ManyToManyField(Tag, related_name='topics')
     views = models.ManyToManyField(User, related_name='user')
@@ -57,7 +59,7 @@ class Answer(models.Model):
     user = models.ForeignKey(MyUser, null=True, on_delete=models.SET_NULL)
 
     discuss = models.ForeignKey(Discuss, null=True, on_delete=models.CASCADE)
-    body = models.CharField(max_length=200, null=True)
+    body = models.TextField(null=True)
 
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)

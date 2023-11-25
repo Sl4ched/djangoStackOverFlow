@@ -1,19 +1,29 @@
 {% include 'head.html' %}
 
+
+<div>
+    {% include 'upperNavbar.html' %}
+</div>
+
 <div class="whole-page">
 
-    <div style="flex-grow: 2">
+    <div style="flex-grow: 2;max-width: 170px;min-width: 170px">
         {% include 'navbar.html' %}
     </div>
 
-    <div style="flex-grow: 5;max-width: 751px">
+    <hr class="vertical">
+
+    <div style="flex-grow: 5;max-width: 751px;margin: 20px">
 
         <h1>{{ specified_discuss.title }}</h1><br>
-        <div>Asked {{ specified_discuss.created|timesince}} Modified {{specified_discuss.updated|timesince}} Viewed
-            {{specified_discuss.views.all.count}} times
+        <div style="display: flex;gap: 10px">
+            <div>Asked {{ specified_discuss.created|timesince}}</div>
+            <div>Modified {{specified_discuss.updated|timesince}}</div>
+            <div>Viewed {{ specified_discuss.views.count}} times</div>
         </div>
         <br>
-
+        <hr class="horizontal">
+        <br>
         <div>{{ specified_discuss.body }}</div>
         <br>
 
@@ -27,6 +37,6 @@
 
     </div>
 
-    <div style="flex-grow: 3">3</div>
+    <div style="flex-grow: 3"></div>
 
 </div>

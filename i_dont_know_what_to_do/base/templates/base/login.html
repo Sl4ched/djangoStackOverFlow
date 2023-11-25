@@ -1,38 +1,40 @@
 {% include 'head.html' %}
+{% load static %}
 
-<div class="whole-page">
-    <div>{% include 'navbar.html' %}</div>
-    <hr class="vertical">
+<div>
+    {% include 'upperNavbar.html' %}
+</div>
 
-    <div style="flex-grow: 1;margin-left: 20px">
+<div style="align-items: center;background-color:#f0f1f2;" class="whole-page">
 
-        <form method="POST">
+    <div style="align-items: center" class="form-container">
+
+        <a href="{% url 'home' %}"><img alt="" style="width: 52px;" src="{% static  'images/mini-logo.png'%}"></a>
+
+        <form style="width: 234px" class="form-column" method="POST">
 
             {% csrf_token %}
 
-            <label for="mail">E-mail:</label>
-            <input required="required" id="mail" name="mail" type="email">
+            <label for="mail">Email</label>
+            <input class="input-text-login-register" required="required" id="mail" name="mail" type="email">
 
-            <label for="password">Password:</label>
-            <input required="required" id="password" name="password" type="password">
+            <div>
+                {% if messages %}
+                <div style="margin-top: -10px;font-size: 12px;color: #c83232">The email or password is incorrect.</div>
+                {% endif %}
+            </div>
 
-            <button type="submit">Submit</button>
+            <label for="password">Password</label>
+            <input class="input-text-login-register" required="required" id="password" name="password" type="password">
+
+            <button style="justify-content: center;padding: 20px" class="button" type="submit">Log in</button>
 
         </form>
 
-        <div>
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li
-                        {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
-                </li>
-                {% endfor %}
-            </ul>
-            {% endif %}
+        <div style="display: flex;gap: 5px;flex-grow: 1;">
+            <div>Don’t have an account ?</div>
+            <a href="{% url 'register' %}">Sign up</a>
         </div>
-
-        <a href="{% url 'register' %}">Create account</a>
 
     </div>
 

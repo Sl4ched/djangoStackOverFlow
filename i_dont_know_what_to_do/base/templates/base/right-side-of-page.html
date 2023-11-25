@@ -1,0 +1,73 @@
+{% load static %}
+
+<div class="flex-right-container">
+
+    <div class="box">
+        <h3 style="background: rgba(99,107,116,0.06);margin: 0;padding: 15px ">Custom filters</h3>
+        <hr class="horizontal">
+        <a href="{% url 'questions' %}" style="margin: 15px">Create a custom filter</a>
+    </div>
+
+    <div class="box">
+        <div id="7"
+             style="background: rgba(99,107,116,0.06);margin: 0;padding: 15px;display: flex;justify-content: space-between">
+            <h3 style="margin: 0" id="1">Watched Tags</h3>
+            {% if user.myuser.watchedTags.count != 0 %}
+            <div id="open" style="color: #636b74;cursor: pointer">edit</div>
+            {% endif %}
+        </div>
+        <hr id="2" class="horizontal">
+
+        {% if user.myuser.watchedTags.count == 0 %}
+
+        <div id="before-click" style="display: flex;flex-flow: column;align-items: center;gap: 10px;margin-top: 10px">
+            <img style="width: 48px" alt="" src="{% static 'images/search.png' %}">
+            <div style="color: #636b74;max-width: 190px;text-align: center">Watch tags to curate your list of
+                questions.
+            </div>
+            <button id="watch-tag" style="margin-bottom: 15px;padding: 10px" class="filter">Watch a tag</button>
+        </div>
+
+        {% else %}
+
+        <!--repeated structure -->
+        <div id="8" style="display: flex;gap: 5px;margin:10px;">
+            {% for tag in user.myuser.watchedTags.all %}
+
+            <div class="tags"><a> {{ tag|lower }}</a></div>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+        <div style="display: none;justify-content: center;align-items: center" id="after-click">
+            <form id="3" method="POST">
+                {% csrf_token %}
+
+                <div id="4" style="display: flex;margin: 15px">
+                    <input required="required" id="5" class="special-input" style="width: 222px" name="added-tag"
+                           type="text">
+                    <button id="6" class="special-button">Add</button>
+                </div>
+
+                {% if messages %}
+                {% for message in messages %}
+                <div id="9" style="color: #c83232;text-align: center;margin-bottom: 10px">{{message}}</div>
+                {% endfor%}
+                {% endif %}
+
+            </form>
+        </div>
+
+    </div>
+
+    <div class="box">
+        <h1></h1>
+        <a></a>
+    </div>
+
+</div>
+
+<script src="{% static 'js/addTag.js' %}"></script>

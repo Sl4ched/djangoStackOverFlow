@@ -15,7 +15,6 @@ h1, h2, h3 {
 
 hr.vertical {
     min-width: 1px;
-
     background-color: rgba(128, 128, 128, 0.29);
     border: none;
 }
@@ -100,7 +99,7 @@ hr.horizontal {
 
 .tags a {
     background: hsl(210, 73%, 96%);
-    color: hsl(205, 47%, 42%, 1);
+    color: #155ca2;
     border-radius: 5px;
     padding: 5px;
     border: none;
@@ -164,19 +163,16 @@ hr {
     display: flex;
     flex-flow: column;
     justify-content: space-between;
-    flex-wrap: wrap;
-
     border: 1px solid rgba(128, 128, 128, 0.27);
     border-radius: 5px;
-
     padding: 20px 10px 10px 10px;
     margin: 0 10px 10px 0;
-    min-width: 200px;
 }
 
 .whole-tag-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+
 }
 
 a.navbar {
@@ -203,8 +199,8 @@ a.navbar {
 }
 
 .whole-user-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 .user {
@@ -247,14 +243,11 @@ a.navbar {
 .profile {
     display: flex;
     align-items: center;
+    cursor: pointer;
+
 }
 
 .account {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown {
     position: relative;
     display: inline-block;
 }
@@ -263,14 +256,66 @@ a.navbar {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
-    min-width: 160px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     z-index: 1;
+    width: 363px;
+    right: 0;
 }
 
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
+.dropdown-content div {
+    padding: 9px 16px;
+    font-size: 11px;
+}
+
+.account-management {
+    display: flex;
+    align-items: center;
+    flex-flow: row;
+    justify-content: space-between;
+    background-color: hsl(210, 80%, 91%);
+}
+
+.btn-register {
+    background: #1b75cf;
+    margin-left: 5px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 7px
+}
+
+.btn-register:hover {
+    background-color: #195b9f;
+}
+
+@media only screen and (min-width: 650px) {
+    .whole-tag-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .whole-user-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media only screen and (min-width: 980px) {
+    .whole-tag-container {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .whole-user-container {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+
+@media only screen and (min-width: 1260px) {
+
+    .whole-tag-container {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .whole-user-container {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
 }

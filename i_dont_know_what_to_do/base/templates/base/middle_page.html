@@ -2,14 +2,21 @@
 
 <div style="margin-left: 15px">
 
-    <div class="flex-container">
-        <h1>All Questions</h1>
+    <div style="padding: 15px 15px 0 15px;" class="flex-container">
+        {% if whichSelected == 'questions' %} <h1>All Questions</h1> {% else %} <h1>Top Questions</h1> {% endif %}
         <a href="{% url 'create_discuss' %}" class="button">Ask Question</a>
     </div>
 
     <div class="flex-container">
-        <div>{{ discuss.count }} questions</div>
 
+        {% if whichSelected == 'questions'%}
+        <div style="font-size: 17px">{{ discuss.count }} questions</div>
+        {% else %}
+        <div></div>
+        {% endif %}
+
+
+        {% if whichSelected == 'questions'%}
         <div style="display:flex;">
 
             <div style="display:flex;" class="buttons">
@@ -28,7 +35,25 @@
                 Filter
             </button>
         </div>
+        {% else %}
+
+        <div style="display:flex;" class="buttons">
+            <a href="{% url 'home'%}?filter=interesting" id="btInteresting">Interesting</a>
+            <hr>
+            <a href="{% url 'home'%}?filter=bountied2" id="btBountied2">Bountied</a>
+            <hr>
+            <a href="{% url 'home'%}?filter=hot" id="btHot">Hot</a>
+            <hr>
+            <a href="{% url 'home'%}?filter=week" id="btWeek">Week</a>
+            <hr>
+            <a href="{% url 'home'%}?filter=month" id="btMonth">Month</a>
+        </div>
+
+        {% endif %}
+
 
     </div>
 
 </div>
+
+<script src="{% static 'js/index.js' %}"></script>

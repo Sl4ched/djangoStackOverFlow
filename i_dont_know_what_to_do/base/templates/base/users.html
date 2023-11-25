@@ -7,12 +7,12 @@
 
 <div class="whole-page">
 
-    <div style="max-width: 170px;min-width: 170px">
+    <div style="flex-grow: 3;max-width: 170px;min-width: 170px">
         {% include 'navbar.html' %}
     </div>
     <hr class="vertical">
 
-    <div style="flex-grow: 1;max-width: 1100px">
+    <div style="flex-grow: 7;max-width: 1100px">
 
         <h1 style="margin: 30px">Users</h1>
 
@@ -60,7 +60,7 @@
                     <a>{{item.username}}</a>
                     <div>Turkey,Istanbul</div>
 
-                    <div style="font-size: 12px;color: #636b74">
+                    <div style="font-size: 12px;color: #636b74;font-weight: bold">
                         {% if item.myuser.quantity is not None %}
                         <div>{{item.myuser.quantity}}</div>
                         {% else %}

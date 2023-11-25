@@ -21,26 +21,83 @@
         </form>
     </div>
 
+    {% if user.is_authenticated %}
+
+    <!--if account is logged in-->
+
     <div class="profile">
-        <div style="width: 25px;height: 25px;background: black;border-radius: 3px;margin: 18px 3px 18px 15px"></div>
-        <div style="margin-right: 10px;color: #636b74">1</div>
+        <div style="width: 25px;height: 25px;background: black;border-radius: 3px;margin: 18px 5px 18px 15px"></div>
+        <div style="margin-right: 10px;color: #636b74">
+            {% if user.myuser.quantity is not None%}
+            <div>{{user.myuser.quantity}}</div>
+            {% else %}
+            <div>0</div>
+            {% endif %}
+
+        </div>
     </div>
 
+
     <div class="about-us">
-        <img alt="" style="width: 25px;height: 25px;margin: 18px" src="{% static 'images/help.png' %}">
+        <img alt="" style="width: 25px;height: 25px;margin: 18px;cursor: pointer;" src="{% static 'images/help.png' %}">
     </div>
 
     <div class="account">
-        <img alt="" style="width: 25px;height: 25px;margin: 18px" src="{% static 'images/comment.png' %}">
+        <img alt="" style="width: 25px;height: 25px;margin: 18px;cursor: pointer;"
+             src="{% static 'images/comment.png' %}">
 
         <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+            <div style="background: rgba(99,107,116,0.04);color: #155ca2;font-weight: bold">CURRENT COMMUNITY</div>
+
+            <div class="account-management">
+                <div style="display:flex;">
+                    <img style="height:20px;width: 20px;margin-right: 3px"
+                         src="{% static 'images/mini-logo.png' %}">
+                    <div style="padding: 0;font-size: 13px ">Stack Overflow</div>
+                </div>
+
+                <div style="display:flex;">
+                    <a href="{% url 'logout' %}">log out</a>
+                </div>
+            </div>
+
+            <div style="background: rgba(99,107,116,0.04);color: #155ca2;font-weight: bold">YOUR COMMUNITIES</div>
+
+            <div style="background: white;padding: 0" class="account-management">
+                <div style="display:flex;">
+                    <img style="height:20px;width: 20px;margin-right: 3px"
+                         src="{% static 'images/mini-logo.png' %}">
+                    <div style="padding: 0;font-size: 13px ">Stack Overflow</div>
+                </div>
+
+                <div style="display:flex;">
+                    {% if user.myuser.quantity is not None%}
+                    <div>{{user.myuser.quantity}}</div>
+                    {% else %}
+                    <div>0</div>
+                    {% endif %}
+                </div>
+            </div>
+
         </div>
-
-
     </div>
+
+
+    {% else %}
+
+    <div style="display:flex;">
+
+        <button style="padding: 8px 12px;margin: 0" class="filter">
+            <a href="{% url 'login' %}">Log in</a>
+        </button>
+
+        <button class="btn-register">
+            <a style="text-decoration: none;color: white" href="{% url 'register' %}">Sign up</a>
+        </button>
+    </div>
+
+    {% endif %}
+
 
 </div>
 <hr class="horizontal">
