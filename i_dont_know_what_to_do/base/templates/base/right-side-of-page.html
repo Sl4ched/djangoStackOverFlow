@@ -31,10 +31,14 @@
         {% else %}
 
         <!--repeated structure -->
-        <div id="8" style="display: flex;gap: 5px;margin:10px;">
+        <div id="8" style="display: flex;gap: 5px;margin:10px;flex-wrap: wrap">
             {% for tag in user.myuser.watchedTags.all %}
 
-            <div class="tags"><a> {{ tag|lower }}</a></div>
+            <div class="tag-for-watched-tags">
+                <a> {{ tag|lower }}</a>
+                <div id="tag-{{ tag.id }}" style="display: none" class="delete-x">x
+                </div>
+            </div>
 
             {% endfor %}
 

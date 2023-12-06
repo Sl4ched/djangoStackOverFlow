@@ -15,4 +15,6 @@ urlpatterns = [
 
     path('create_discuss/', views.create_discuss, name='create_discuss'),
 
+    path('getTag/', views.get_quantity_of_tags),
+    path('delete/<str:id>', views.delete_tag)
 ]

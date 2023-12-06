@@ -4,9 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 
 from .forms import DiscussForm
-from .models import Discuss, Tag
+from .models import Discuss, Tag, MyUser
 
 
 def logout_page(request):
@@ -61,17 +62,23 @@ def home(request):
 
     all_tags = Tag.objects.all()
 
-    print(request.user)
-
     if request.method == 'POST':
         new_followed_tag = request.POST['added-tag']
 
-        current_user = request.user
-
-        ok = new_followed_tag.lower() in str(all_tags).lower()
+        ok = False
+        for item in all_tags:
+            ok = item.tags.lower() == new_followed_tag.lower()
+            if ok:
+                break
 
         if ok:
-            current_user.myuser.watchedTags.add(str(new_followed_tag))
+            try:
+                new_tag = Tag.objects.get(tags=str(new_followed_tag).lower())
+            except:
+                new_tag = Tag.objects.get(tags=str(new_followed_tag).upper())
+
+            request.user.myuser.watchedTags.add(new_tag)  # added new tag in myuser's watched tag's row
+
         else:
             messages.error(request, f"{new_followed_tag} does not exist on this site.")
 
@@ -132,6 +139,7 @@ def tags(request):
             Q(tags__startswith=filter_tag)
 
         )
+
     context = {
         'title': 'Tags - StackOverflow',
         'tags': whole_tags,
@@ -143,8 +151,6 @@ def tags(request):
 
 def users(request):
     filter_query = request.GET.get('filter') if request.GET.get('filter') is not None else "reputation"
-
-    discuss = Discuss.objects.all()
 
     update_user()
 
@@ -215,10 +221,7 @@ def create_discuss(request):
 def update_user():
     discuss = Discuss.objects.all()
 
-    temp_dict = {}
-
-    for item in discuss:
-        temp_dict[str(item.user)] = 0
+    temp_dict = {str(item.user): 0 for item in discuss}
 
     for item in discuss:
         temp_dict[str(item.user)] += 1
@@ -227,3 +230,15 @@ def update_user():
         user = User.objects.get(username=key)
         user.myuser.quantity = value
         user.save()
+
+
+def get_quantity_of_tags(request):
+    return JsonResponse(
+        {'quantity': request.user.myuser.watchedTags.count(),
+         'tagID': [i.id for i in request.user.myuser.watchedTags.all()]})
+
+
+def delete_tag(request, id):
+    if request.method == 'DELETE':
+        request.user.myuser.watchedTags.remove(Tag.objects.get(id=id[4:]))
+        return JsonResponse({'whereTo': ""})

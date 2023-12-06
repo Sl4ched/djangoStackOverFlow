@@ -20,7 +20,7 @@ class MyUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     quantity = models.IntegerField(null=True, blank=True)
     username = models.CharField(max_length=100, null=True, blank=False)
-    watchedTags = models.ManyToManyField(Tag, null=True, related_name='watchedTag')
+    watchedTags = models.ManyToManyField(Tag, related_name='watchedTag')
 
     def __int__(self):
         return self.quantity
@@ -41,7 +41,7 @@ class Discuss(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
     topics = models.ManyToManyField(Tag, related_name='topics')
-    views = models.ManyToManyField(User, related_name='user')
+    views = models.ManyToManyField(User, related_name='viewed_users')
 
     title = models.CharField(max_length=300)
     body = models.TextField()
