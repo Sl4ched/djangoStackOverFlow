@@ -3,16 +3,15 @@ const after = document.querySelector('#after-click')
 const editBtn = document.querySelector('#open')
 
 let safePlaces = []
-
 for (let i = 0; i < 20; i++) safePlaces.push(i.toString())
-
 let safeSwitch = false
+
 let arrayOfWatchedTags = []
 fetch('/getTag')
     .then(response => response.json())
     .then(result => {
         // this is sending a get request to backend .So we can get some information about our tag table
-        // for example tagID is an array which contains current user's id's of watched tags
+        // for example tagID attribute is an array which contains, current user id's of watched tags
         arrayOfWatchedTags = result.tagID
         const showCross = (displayType) => {
 
@@ -24,11 +23,13 @@ fetch('/getTag')
 
         window.addEventListener('click', (e) => {
 
-            safePlaces.forEach(value => {
+            safePlaces.forEach(value => { //this checking whenever you click are you in safe zone
                 if (e.target.id === value) safeSwitch = true
             })
 
-            if (e.target.id === "watch-tag" || e.target.id === 'open') { // input on
+            if (safeSwitch) { // this is first if. So if safe switch is true then other if's does not work.
+                safeSwitch = !safeSwitch
+            } else if (e.target.id === "watch-tag" || e.target.id === 'open') { // After On Display
 
                 try {
                     before.style.display = 'none'
@@ -40,23 +41,19 @@ fetch('/getTag')
                 after.style.display = 'flex'
                 editBtn.style.display = 'none'
 
-            } else if (safeSwitch) {
-                safeSwitch = !safeSwitch
-                //safe zone :)
-
-            } else { // input off
+            } else { // Before On Display
 
                 try {
                     before.style.display = 'flex'
                 } catch (e) {
                 }
+
                 showCross("none")
 
                 after.style.display = 'none'
                 editBtn.style.display = 'block'
 
             }
-
 
         })
 
