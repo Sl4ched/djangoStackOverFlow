@@ -17,6 +17,14 @@ const btVoters = document.querySelector('#btVoters')
 const btEditors = document.querySelector('#btEditors')
 const btModerators = document.querySelector('#btModerators')
 
+//home
+const btInteresting = document.querySelector('#btInteresting')
+const btBountied2 = document.querySelector('#btBountied2')
+const btHot = document.querySelector('#btHot')
+const btWeek = document.querySelector('#btWeek')
+const btMonth = document.querySelector('#btMonth')
+
+
 const searchParams = new URLSearchParams(window.location.search);
 
 switch (searchParams.get('filter')) {
@@ -59,6 +67,22 @@ switch (searchParams.get('filter')) {
         btModerators.style = 'background:hsla(0, 0%, 67%, 0.35);border-radius:0'
         break
 
+    case 'interesting':
+        btInteresting.style = 'background:hsla(0, 0%, 67%, 0.35);border-radius:7px 0 0 7px'
+        break
+    case 'bountied2':
+        btBountied2.style = 'background:hsla(0, 0%, 67%, 0.35);border-radius:0'
+        break
+    case 'hot':
+        btHot.style = 'background:hsla(0, 0%, 67%, 0.35);border-radius:0'
+        break
+    case 'week':
+        btWeek.style = 'background:hsla(0, 0%, 67%, 0.35);border-radius:0'
+        break
+    case 'month':
+        btMonth.style = 'background:hsla(0, 0%, 67%, 0.35);border-radius:0'
+        break
+
     default:
         // this is for default filter case. if there is no any query parameter first button must be in active state
         // in that case we don't know which page's first button so try and catch blocks try for each page's first button
@@ -68,7 +92,11 @@ switch (searchParams.get('filter')) {
             try {
                 btPopular.style = 'background:hsla(0, 0%, 67%, 0.35);border-radius:0'
             } catch (e) {
-                btReputation.style = 'background:hsla(0, 0%, 67%, 0.35);border-radius:7px 0 0 7px'
+                try {
+                    btReputation.style = 'background:hsla(0, 0%, 67%, 0.35);border-radius:7px 0 0 7px'
+                } catch (e) {
+                    btInteresting.style = 'background:hsla(0, 0%, 67%, 0.35);border-radius:7px 0 0 7px'
+                }
             }
         }
 
