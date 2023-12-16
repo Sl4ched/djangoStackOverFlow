@@ -1,14 +1,12 @@
 <h1>Current State:</h1>
 
-<img alt="pht1" src="./i_dont_know_what_to_do/static/images/projectImages/Screenshot_1.png">
-<hr>
-<img alt="pht1" src="./i_dont_know_what_to_do/static/images/projectImages/Screenshot_2.png">
-<hr>
 <img alt="pht1" src="./i_dont_know_what_to_do/static/images/projectImages/Screenshot_3.png">
 <hr>
-<img alt="pht1" src="./i_dont_know_what_to_do/static/images/projectImages/Screenshot_4.png">
+<img alt="pht1" src="./i_dont_know_what_to_do/static/images/projectImages/Screenshot_11.png">
 <hr>
-<img alt="pht1" src="./i_dont_know_what_to_do/static/images/projectImages/Screenshot_5.png">
+<img alt="pht1" src="./i_dont_know_what_to_do/static/images/projectImages/Screenshot_1.png">
+<hr>
+<img alt="pht1" src="./i_dont_know_what_to_do/static/images/projectImages/Screenshot_4.png">
 <hr>
 <img alt="pht1" src="./i_dont_know_what_to_do/static/images/projectImages/Screenshot_6.png">
 <hr>
@@ -18,6 +16,6 @@
 <hr>
 <img alt="pht1" src="./i_dont_know_what_to_do/static/images/projectImages/Screenshot_9.png">
 <hr>
-<img alt="pht1" src="./i_dont_know_what_to_do/static/images/projectImages/Screenshot_10.png">
+<img alt="pht1" src="./i_dont_know_what_to_do/static/images/projectImages/Screenshot_2.png">
 <hr>
-<img alt="pht1" src="./i_dont_know_what_to_do/static/images/projectImages/Screenshot_11.png">
+<img alt="pht1" src="./i_dont_know_what_to_do/static/images/projectImages/Screenshot_10.png">
