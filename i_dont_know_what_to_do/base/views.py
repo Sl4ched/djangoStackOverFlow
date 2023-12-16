@@ -12,6 +12,7 @@ from .models import Discuss, Tag, MyUser
 
 def logout_page(request):
     logout(request)
+    is_it_in_watched_tags(request)
     return redirect('home')
 
 
@@ -25,6 +26,7 @@ def login_page(request):
 
         if user is not None:
             login(request, user)
+            is_it_in_watched_tags(request)
             return redirect('home')
         else:
             messages.error(request, 'Password or mail incorrect')
@@ -59,34 +61,20 @@ def register_page(request):
 
 def home(request):
     discuss = Discuss.objects.all()
+    filter_value = request.GET.get("filter") if request.GET.get("filter") is not None else "interesting"
 
-    all_tags = Tag.objects.all()
+    if filter_value == "interesting":
+        discuss = Discuss.objects.order_by("-is_watching_or_not")
+    else:
+        pass
 
     if request.method == 'POST':
-        new_followed_tag = request.POST['added-tag']
-
-        ok = False
-        for item in all_tags:
-            ok = item.tags.lower() == new_followed_tag.lower()
-            if ok:
-                break
-
-        if ok:
-            try:
-                new_tag = Tag.objects.get(tags=str(new_followed_tag).lower())
-            except:
-                new_tag = Tag.objects.get(tags=str(new_followed_tag).upper())
-
-            request.user.myuser.watchedTags.add(new_tag)  # added new tag in myuser's watched tag's row
-
-        else:
-            messages.error(request, f"{new_followed_tag} does not exist on this site.")
+        add_watched_tag(request)
 
     context = {
         'title': 'Stack Overflow - Where Developers Learn, Share & Build Careers',
         'whichSelected': 'home',
         'discuss': discuss,
-
     }
 
     return render(request, 'base/home.html', context=context)
@@ -99,6 +87,9 @@ def questions(request):
         discuss = Discuss.objects.all().order_by('-created')
     else:
         discuss = Discuss.objects.all()
+
+    if request.method == 'POST':
+        add_watched_tag(request)
 
     context = {
         'title': 'Questions - StackOverflow',
@@ -202,13 +193,12 @@ def create_discuss(request):
 
         if form.is_valid():
             new_form = form.save(commit=False)
-
             new_form.user = request.user
             new_form.save()
             form.save_m2m()
 
             update_user()
-
+            is_it_in_watched_tags(request)
             return redirect('questions')
 
     context = {
@@ -232,13 +222,51 @@ def update_user():
         user.save()
 
 
+def is_it_in_watched_tags(request):
+    try:
+        arr1 = [i.tags for i in request.user.myuser.watchedTags.all()]  # arr1 is current user's watched tags
+
+        for i in Discuss.objects.all():
+            for j in i.topics.all():
+                i.is_watching_or_not = arr1.__contains__(j.tags)
+                i.save()
+                break
+    except:
+        for i in Discuss.objects.all():
+            i.is_watching_or_not = False
+            i.save()
+
+
 def get_quantity_of_tags(request):
     return JsonResponse(
         {'quantity': request.user.myuser.watchedTags.count(),
          'tagID': [i.id for i in request.user.myuser.watchedTags.all()]})
 
 
+def add_watched_tag(request):
+    new_followed_tag = request.POST['added-tag']
+    all_tags = Tag.objects.all()
+
+    ok = False
+    for item in all_tags:
+        ok = item.tags.lower() == new_followed_tag.lower()
+        if ok:
+            break
+
+    if ok:
+        try:
+            new_tag = Tag.objects.get(tags=str(new_followed_tag).lower())
+        except:
+            new_tag = Tag.objects.get(tags=str(new_followed_tag).upper())
+
+        request.user.myuser.watchedTags.add(new_tag)  # added new tag in myuser's watched tag's row
+        is_it_in_watched_tags(request)
+    else:
+        messages.error(request, f"{new_followed_tag} does not exist on this site.")
+
+
 def delete_tag(request, id):
     if request.method == 'DELETE':
         request.user.myuser.watchedTags.remove(Tag.objects.get(id=id[4:]))
+        is_it_in_watched_tags(request)
         return JsonResponse({'whereTo': ""})

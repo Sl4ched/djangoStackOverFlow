@@ -4,20 +4,20 @@
 
     {% if whichSelected == 'home' %}
 
-    <a style="background: rgba(100,107,116,0.15);" href="{% url 'home' %}">
+    <a style="padding-left: 10px;background: rgba(100,107,116,0.15);" href="{% url 'home' %}">
         <div style="font-weight: bold">Home</div>
         <div style="display:block;" class="orange-column"></div>
     </a>
     {% else %}
 
-    <a href="{% url 'home' %}">
+    <a style="padding-left: 10px;" href="{% url 'home' %}">
         <div>Home</div>
         <div style="display:none;" class="orange-column"></div>
     </a>
 
     {% endif %}
     <br>
-    <div style="font-size: 11px;color: #646b74">PUBLIC</div>
+    <div style="padding-left:5px;font-size: 11px;color: #646b74">PUBLIC</div>
 
     <div class="qtu">
 

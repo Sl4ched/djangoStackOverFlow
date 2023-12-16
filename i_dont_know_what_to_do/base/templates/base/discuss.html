@@ -2,6 +2,47 @@
 
 <hr class="horizontal">
 
+{% if item.is_watching_or_not %}
+<div style="background:rgb(253,247,231);" class="discuss">
+
+    <div class="left">
+
+        <div class="mg">{{ item.votes }} votes</div>
+        <div class="mg">{{ item.answer_set.all.count }} answers</div>
+        <div class="mg">{{ item.views.all.count }} views</div>
+
+    </div>
+
+    <div class="right">
+
+        <a href="{% url 'discuss_room' item.id%}" class="title">{{item.title}}</a><br>
+
+
+        <div>{{ item.body|truncatechars:150 }}</div>
+        <br>
+
+        <div class="below-title">
+
+            <div class="tags">
+                {% for tag in item.topics.all %}
+
+                <a> {{ tag|lower }}</a>
+
+                {% endfor %}
+            </div>
+
+            <div class="user-time">
+                <a></a>
+                <div></div>
+                <a> {{item.user.myuser.username}} asked {{ item.created|timesince }} ago</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% else %}
 <div class="discuss">
 
     <div class="left">
@@ -41,6 +82,6 @@
     </div>
 
 </div>
-
+{% endif %}
 
 {% endfor %}

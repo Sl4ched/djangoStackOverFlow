@@ -43,6 +43,7 @@ class Discuss(models.Model):
     topics = models.ManyToManyField(Tag, related_name='topics')
     views = models.ManyToManyField(User, related_name='viewed_users')
 
+    is_watching_or_not = models.BooleanField(null=True, default=False)
     title = models.CharField(max_length=300)
     body = models.TextField()
 
