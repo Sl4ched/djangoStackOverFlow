@@ -1,7 +1,7 @@
 //questions
 const btNew = document.querySelector('#btNew')
-const btActive = document.querySelector('#btActive')
 const btBountied = document.querySelector('#btBountied')
+const btScore = document.querySelector('#btScore')
 const btUnanswered = document.querySelector('#btUnanswered')
 const btFilter = document.querySelector('#btFilter')
 
@@ -31,11 +31,11 @@ switch (searchParams.get('filter')) {
     case 'newest':
         btNew.style = 'background:hsla(0, 0%, 67%, 0.35);border-radius:7px 0 0 7px'
         break
-    case 'active':
-        btActive.style = 'background:hsla(0, 0%, 67%, 0.35);border-radius:0'
-        break
     case 'bountied':
         btBountied.style = 'background:hsla(0, 0%, 67%, 0.35);border-radius:0'
+        break
+    case 'score':
+        btScore.style = 'background:hsla(0, 0%, 67%, 0.35);border-radius:0'
         break
     case 'unanswered':
         btUnanswered.style = 'background:hsla(0, 0%, 67%, 0.35);border-radius:0 7px 7px 0'

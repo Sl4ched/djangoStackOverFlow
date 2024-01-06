@@ -1,15 +1,16 @@
 {% load static %}
+
 <hr class="horizontal" style="background: #e67b23;height: 3px">
 
 <div class="upper-navbar">
 
     <div>
-        <a class="stack-logo" href="{% url 'home' %}"><img style="width:150px;"
+        <a class="stack-logo" href="{% url 'home' %}"><img style="width:145px;"
                                                            src="{% static '/images/logo-stackoverflow.png' %}"></a>
     </div>
 
     {% if user.is_authenticated %}
-    <div style="width: 100px"></div>
+    <div class="about" style="cursor:pointer;">Products</div>
     {% else %}
     <a class="about"> About</a>
     {% endif %}
@@ -49,7 +50,8 @@
 
 
     <div class="about-us">
-        <img alt="" style="width: 25px;height: 25px;margin: 14px;cursor: pointer;" src="{% static 'images/help.png' %}">
+        <img alt="" style="width: 25px;height: 25px;margin: 14px;cursor: pointer;"
+             src="{% static 'images/help.png' %}">
     </div>
 
     <div class="account">

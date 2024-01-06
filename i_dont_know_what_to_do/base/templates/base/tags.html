@@ -1,7 +1,7 @@
 {% include 'head.html' %}
 {% load static %}
 
-<div>
+<div style="top: 0;position:sticky;">
     {% include 'upperNavbar.html' %}
 </div>
 
@@ -39,9 +39,9 @@
 
                     <div style="display:flex;margin: 0 10px 0 0" class="buttons">
                         <a href="{% url 'tags' %}?filter=popular" id="btPopular">Popular</a>
-                        <hr>
+                        <hr class="vertical" style="background-color: rgba(128, 128, 128, 0.55)">
                         <a href="{% url 'tags' %}?filter=name" id="btName">Name</a>
-                        <hr>
+                        <hr class="vertical" style="background-color: rgba(128, 128, 128, 0.55)">
                         <a href="{% url 'tags' %}?filter=new" id="btNew2">New</a>
                     </div>
 

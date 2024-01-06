@@ -1,7 +1,7 @@
+{% load static%}
 {% include 'head.html' %}
 
-
-<div>
+<div style="top: 0;position:sticky;">
     {% include 'upperNavbar.html' %}
 </div>
 
@@ -13,7 +13,7 @@
 
     <hr class="vertical">
 
-    <div style="flex-grow: 5;max-width: 751px;margin: 20px">
+    <div style="flex-grow: 5;max-width: 655px;margin: 20px"><!--middle page-->
 
         <h1>{{ specified_discuss.title }}</h1><br>
         <div style="display: flex;gap: 10px">
@@ -24,19 +24,135 @@
         <br>
         <hr class="horizontal">
         <br>
-        <div>{{ specified_discuss.body }}</div>
-        <br>
 
-        <div class="tags">
-            {% for tag in specified_discuss.topics.all %}
+        <div style="display: flex">
 
-            <a> {{ tag|lower }}</a>
+            <form method="POST">
+
+                {% csrf_token %}
+                <div style="padding: 15px;display: flex;flex-direction: column;gap: 15px;align-items: center">
+                    <button name="up" class="up-down"><img style="height: 32px" alt="img"
+                                                           src="{% static 'images/arrow-up.png' %}">
+                    </button>
+                    <div style="font-size: 19px;font-weight: bold">{{specified_discuss.votes}}</div>
+                    <button name="down" class="up-down"><img style="height: 32px" alt="img"
+                                                             src="{% static 'images/arrow-down.png' %}">
+                    </button>
+                </div>
+            </form>
+
+            <div style="display: flex;flex-direction: column">
+                <div style="font-size: 15px">{{ specified_discuss.body }}</div>
+                <br>
+                <div class="tags">
+                    {% for tag in specified_discuss.topics.all %}
+
+                    <a> {{ tag|lower }}</a>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+        <h2 style="margin: 20px  0">{{answers.count}} Answers</h2>
+
+        <div style="display: flex;flex-direction: column;gap: 20px"> <!--Answers Container-->
+            {% for answer in answers %}
+            <div style="padding: 15px;background-color:#f6f6f6;border-radius: 3px;font-size: 15px">
+
+                <div>{{answer.body}}</div>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;padding: 15px 0 0 10px">
+
+                <div style="display:flex;gap: 5px">
+                    <a style="color: #636b74">Share</a>
+                    <a style="color: #636b74">Edit</a>
+                    <a style="color: #636b74">Follow</a>
+                </div>
+
+                <div style="display:flex;flex-direction: column;gap: 5px">
+                    <div style="color: #636b74;font-size: 12px">answered {{answer.created}}</div>
+                    <div style="display:flex;gap: 5px">
+                        <div style="background: black;height: 30px;width: 30px;border-radius: 4px"></div>
+                        <a>{{user.myuser.username}}</a>
+                    </div>
+                </div>
+
+            </div>
 
             {% endfor %}
         </div>
 
+
+        <h2>Your Answer</h2>
+
+        <form method="POST" style="margin: 0 0 0 0;display: flex;flex-flow:column;">
+            {% csrf_token %}
+
+
+            <textarea name="text-body"
+                      id="text-area"
+                      style="border-radius: 3px 3px 0 0;border-color: rgba(128,128,128,0.51);resize: vertical"
+                      cols="85"
+                      rows="10"></textarea>
+            <div class="resizer">
+                <img style="width: 20px;height: 25px;position:relative;bottom: 6px" alt="img"
+                     src="{% static 'images/drag.png'%}">
+            </div>
+
+            <div style="color: #0c0d0e;font-size: 15px;margin-top: 5px" id="comment-inspection"></div>
+            <button style="padding: 20px 8px;margin: 20px 0 0 0;max-width: 121px" class="button">Post Your
+                Answer
+            </button>
+        </form>
+
     </div>
 
-    <div style="flex-grow: 3"></div>
+    <div style="flex-grow: 3;max-width: 400px;margin: 30px 15px 0 25px">
+
+        <div style="border: 1px solid hsl(43,85%,72%);" class="box">
+
+            <h5 style="font-size:12px;background: hsl(43,85%,88%);margin: 0;padding: 12px 15px ">The Overflow Blog</h5>
+            <hr style="background:hsl(43,85%,72%)" class="horizontal">
+
+            <div style="padding: 15px;display: flex;flex-flow: column;gap: 12px;background: hsla(43,85%,72%,0.16);">
+
+                <div style="display: flex;gap: 5px">
+                    <img style="width: 15px;height: 15px" alt="pen" src="{% static './images/pencil.png' %}">
+                    <div>Self-healing code is the future of software development</div>
+                </div>
+
+                <div style="display: flex;gap: 5px">
+                    <img style="width: 15px;height: 15px" alt="pen" src="{% static './images/pencil.png' %}">
+
+                    <div>The hardest part of building software is not coding, it's requirements</div>
+                </div>
+            </div>
+
+            <hr style="background:hsl(43,85%,72%)" class="horizontal">
+            <h5 style="font-size:12px;background: hsl(43,85%,88%);margin: 0;padding:12px 15px ">Featured on Meta</h5>
+            <hr style="background:hsl(43,85%,72%)" class="horizontal">
+
+            <div style="padding: 15px;display: flex;flex-flow: column;gap: 12px;background: hsla(43,85%,72%,0.16);">
+
+                <div style="display: flex;gap: 5px">
+                    <img style="width: 15px;height: 15px" alt="pen" src="{% static './images/chat-bubble.png' %}">
+                    <div>Update to our Advertising Guidelines</div>
+                </div>
+
+                <div style="display: flex;gap: 5px">
+                    <img style="width: 15px;height: 15px" alt="pen" src="{% static './images/mini-logo2.png' %}">
+                    <div>Temporary policy: Generative AI (e.g., ChatGPT) is banned</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 </div>
+
+<div class="footer">{% include 'base/footer.html' %}</div>
+
+<script src="{% static 'js/inspect.js' %}"></script>

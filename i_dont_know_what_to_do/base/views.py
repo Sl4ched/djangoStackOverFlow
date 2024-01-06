@@ -1,3 +1,5 @@
+import math
+
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -7,7 +9,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 
 from .forms import DiscussForm
-from .models import Discuss, Tag, MyUser
+from .models import Discuss, Tag, MyUser, Answer
 
 
 def logout_page(request):
@@ -60,11 +62,12 @@ def register_page(request):
 
 
 def home(request):
-    discuss = Discuss.objects.all()
+    showed_discuss = Discuss.objects.all()
+
     filter_value = request.GET.get("filter") if request.GET.get("filter") is not None else "interesting"
 
     if filter_value == "interesting":
-        discuss = Discuss.objects.order_by("-is_watching_or_not")
+        showed_discuss = Discuss.objects.order_by("-is_watching_or_not")
     else:
         pass
 
@@ -74,27 +77,47 @@ def home(request):
     context = {
         'title': 'Stack Overflow - Where Developers Learn, Share & Build Careers',
         'whichSelected': 'home',
-        'discuss': discuss,
+        'showed_discuss': showed_discuss,
     }
 
-    return render(request, 'base/home.html', context=context)
+    return render(request, 'base/questions.html', context=context)
 
 
 def questions(request):
+    discuss = Discuss.objects.all()
+
     filter_query = request.GET.get('filter') if request.GET.get('filter') is not None else "newest"
 
+    page = request.GET.get('page') if request.GET.get('page') is not None else "1"
+    per_page = request.GET.get('perPage') if request.GET.get('perPage') is not None else "10"
+
     if filter_query == 'newest':
-        discuss = Discuss.objects.all().order_by('-created')
+        showed_discuss = Discuss.objects.all().order_by('-created')[
+                         (int(page) - 1) * int(per_page): int(page) * int(per_page)]
+    elif filter_query == 'score':
+        showed_discuss = Discuss.objects.all().order_by('-votes')[
+                         (int(page) - 1) * int(per_page): int(page) * int(per_page)]
+    elif filter_query == 'unanswered':
+        showed_discuss = Discuss.objects.all().order_by('answer')[
+                         (int(page) - 1) * int(per_page): int(page) * int(per_page)]
     else:
-        discuss = Discuss.objects.all()
+        showed_discuss = Discuss.objects.all()[
+                         (int(page) - 1) * int(per_page): int(page) * int(per_page)]
 
     if request.method == 'POST':
         add_watched_tag(request)
 
+    var_how_many_page_available = range(math.ceil(discuss.count() / int(per_page)))
+
     context = {
         'title': 'Questions - StackOverflow',
         'discuss': discuss,
-        'whichSelected': 'questions'
+        'showed_discuss': showed_discuss,
+        'whichSelected': 'questions',
+        'current_page': page,
+        'per_page': per_page,
+        'how_many_pages': [i + 1 for i in var_how_many_page_available],
+        'filter': filter_query
     }
 
     return render(request, 'base/questions.html', context=context)
@@ -170,13 +193,34 @@ def users(request):
 
 
 @login_required(login_url='login')
-def discuss_room(request, id):
-    specified_discuss = Discuss.objects.get(id=id)
+def discuss_room(request, _id):
+    specified_discuss = Discuss.objects.get(id=_id)
     specified_discuss.views.add(request.user)  # added new user to views section
+
+    answers = specified_discuss.answer_set.all()
+
+    if request.method == 'POST':
+
+        if request.POST.get('up') is not None:
+            specified_discuss.votes += 1
+            specified_discuss.save()
+            return redirect('discuss_room', _id)
+
+        if request.POST.get('down') is not None:
+            specified_discuss.votes -= 1
+            specified_discuss.save()
+            return redirect('discuss_room', _id)
+
+        if request.POST.get('text-body') is not None:
+            specified_discuss.answer_set.create(
+                body=request.POST.get('text-body'),
+                user=request.user.myuser)
+            return redirect('discuss_room', _id)
 
     context = {
         'specified_discuss': specified_discuss,
-        'whichSelected': 'questions'
+        'whichSelected': 'questions',
+        'answers': answers
     }
 
     return render(request, 'base/discuss_room.html', context=context)
@@ -231,7 +275,8 @@ def is_it_in_watched_tags(request):
                 i.is_watching_or_not = arr1.__contains__(j.tags)
                 i.save()
                 break
-    except:
+    except Exception as e:
+        print(e)
         for i in Discuss.objects.all():
             i.is_watching_or_not = False
             i.save()
@@ -256,7 +301,8 @@ def add_watched_tag(request):
     if ok:
         try:
             new_tag = Tag.objects.get(tags=str(new_followed_tag).lower())
-        except:
+        except Exception as e:
+            print(e)
             new_tag = Tag.objects.get(tags=str(new_followed_tag).upper())
 
         request.user.myuser.watchedTags.add(new_tag)  # added new tag in myuser's watched tag's row
@@ -265,8 +311,8 @@ def add_watched_tag(request):
         messages.error(request, f"{new_followed_tag} does not exist on this site.")
 
 
-def delete_tag(request, id):
+def delete_tag(request, _id):
     if request.method == 'DELETE':
-        request.user.myuser.watchedTags.remove(Tag.objects.get(id=id[4:]))
+        request.user.myuser.watchedTags.remove(Tag.objects.get(id=_id[4:]))
         is_it_in_watched_tags(request)
         return JsonResponse({'whereTo': ""})

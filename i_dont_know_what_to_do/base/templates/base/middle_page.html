@@ -2,12 +2,13 @@
 
 <div style="margin-left: 15px">
 
-    <div style="padding: 15px 15px 0 15px;" class="flex-container">
-        {% if whichSelected == 'questions' %} <h1>All Questions</h1> {% else %} <h1>Top Questions</h1> {% endif %}
+    <div style="padding: 15px 10px 15px 15px;" class="flex-container">
+        {% if whichSelected == 'questions' %} <h1 style="font-size: 27px">All Questions</h1> {% else %} <h1
+            style="font-size: 27px">Top Questions</h1> {% endif %}
         <a href="{% url 'create_discuss' %}" class="button">Ask Question</a>
     </div>
 
-    <div class="flex-container">
+    <div style="margin-bottom: 5px" class="flex-container">
 
         {% if whichSelected == 'questions'%}
         <div style="font-size: 17px">{{ discuss.count }} questions</div>
@@ -19,14 +20,15 @@
         {% if whichSelected == 'questions'%}
         <div style="display:flex;">
 
+
             <div style="display:flex;" class="buttons">
-                <a href="{% url 'questions'%}?filter=newest" id="btNew">Newest</a>
-                <hr>
-                <a href="{% url 'questions'%}?filter=active" id="btActive">Active</a>
-                <hr>
-                <a href="{% url 'questions'%}?filter=bountied" id="btBountied">Bountied</a>
-                <hr>
-                <a href="{% url 'questions'%}?filter=unanswered" id="btUnanswered">Unanswered</a>
+                <a href="{% url 'questions'%}?filter=newest&page=1&perPage={{per_page}}" id="btNew">Newest</a>
+                <hr class="vertical" style="background-color: rgba(128, 128, 128, 0.55)">
+                <a href="{% url 'questions'%}?filter=score&page=1&perPage={{per_page}}" id="btScore">Score</a>
+                <hr class="vertical" style="background-color: rgba(128, 128, 128, 0.55)">
+                <a href="{% url 'questions'%}?filter=bountied&page=1&perPage={{per_page}}" id="btBountied">Bountied</a>
+                <hr class="vertical" style="background-color: rgba(128, 128, 128, 0.55)">
+                <a href="{% url 'questions'%}?filter=unanswered&page=1&perPage={{per_page}}" id="btUnanswered">Unanswered</a>
             </div>
 
 
@@ -39,13 +41,13 @@
 
         <div style="display:flex;" class="buttons">
             <a href="{% url 'home'%}?filter=interesting" id="btInteresting">Interesting</a>
-            <hr>
+            <hr class="vertical" style="background-color: rgba(128, 128, 128, 0.55)">
             <a href="{% url 'home'%}?filter=bountied2" id="btBountied2">Bountied</a>
-            <hr>
+            <hr class="vertical" style="background-color: rgba(128, 128, 128, 0.55)">
             <a href="{% url 'home'%}?filter=hot" id="btHot">Hot</a>
-            <hr>
+            <hr class="vertical" style="background-color: rgba(128, 128, 128, 0.55)">
             <a href="{% url 'home'%}?filter=week" id="btWeek">Week</a>
-            <hr>
+            <hr class="vertical" style="background-color: rgba(128, 128, 128, 0.55)">
             <a href="{% url 'home'%}?filter=month" id="btMonth">Month</a>
         </div>
 
@@ -53,7 +55,8 @@
 
 
     </div>
-
 </div>
+
+<hr class="horizontal">
 
 <script src="{% static 'js/index.js' %}"></script>

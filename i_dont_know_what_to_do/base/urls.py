@@ -11,10 +11,10 @@ urlpatterns = [
     path('tags/', views.tags, name='tags'),
     path('users/', views.users, name='users'),
 
-    path('questions/<str:id>', views.discuss_room, name='discuss_room'),
+    path('questions/<str:_id>', views.discuss_room, name='discuss_room'),
 
     path('create_discuss/', views.create_discuss, name='create_discuss'),
 
     path('getTag/', views.get_quantity_of_tags),
-    path('delete/<str:id>', views.delete_tag)
+    path('delete/<str:_id>', views.delete_tag),
 ]

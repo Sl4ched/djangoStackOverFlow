@@ -1,6 +1,6 @@
-{% for item in discuss%}
+{% load static %}
 
-<hr class="horizontal">
+{% for item in showed_discuss%}
 
 {% if item.is_watching_or_not %}
 <div style="background:rgb(253,247,231);" class="discuss">
@@ -84,4 +84,57 @@
 </div>
 {% endif %}
 
+<hr class="horizontal">
+
 {% endfor %}
+
+{% if whichSelected == 'questions' %}
+
+<div style="padding: 70px 0 45px 25px;display: flex;justify-content: space-between">
+
+    <div style="display: flex;gap: 15px">
+
+        {% if current_page != "1" %}
+        <a class="page-button"
+           href="{% url 'questions' %}?filter={{filter}}&page={{current_page|add:-1}}&perPage={{per_page}}"
+           style="padding: 5px 8px;border: 1px solid rgba(128,128,128,0.56);border-radius: 5px">Prev</a>
+        {% endif %}
+
+        <div style="display: flex;gap: 5px">
+
+            {% for i in how_many_pages %}
+
+            <a id="pageButton{{i}}" class="page-button"
+               href="{% url 'questions'%}?filter={{filter}}&page={{i}}&perPage={{per_page}}"
+               style="padding: 5px 8px;border: 1px solid rgba(128,128,128,0.56);border-radius: 5px">{{i}}</a>
+
+            {% endfor %}
+
+        </div>
+
+        {% if current_page|add:0 != how_many_pages|length %}
+        <a class="page-button"
+           href="{% url 'questions' %}?filter={{filter}}&page={{current_page|add:1}}&perPage={{per_page}}"
+           style="padding: 5px 8px;border: 1px solid rgba(128,128,128,0.56);border-radius: 5px">Next</a>
+        {% endif %}
+
+    </div>
+
+    <div style="display: flex;gap: 5px">
+
+
+        <a href="{% url 'questions' %}?filter={{filter}}&page=1&perPage=10" id="per10" class="page-button"
+           style="padding: 5px 8px;border: 1px solid rgba(128,128,128,0.56);border-radius: 5px">10</a>
+        <a href="{% url 'questions' %}?filter={{filter}}&page=1&perPage=15" id="per15" class="page-button"
+           style="padding: 5px 8px;border: 1px solid rgba(128,128,128,0.56);border-radius: 5px">15</a>
+        <a href="{% url 'questions' %}?filter={{filter}}&page=1&perPage=25" id="per25" class="page-button"
+           style="padding: 5px 8px;border: 1px solid rgba(128,128,128,0.56);border-radius: 5px">25</a>
+        <div style="display: flex;flex-grow: 1;align-items: center;margin-left: 5px">per page</div>
+
+    </div>
+</div>
+
+
+{% endif %}
+
+<script src="{% static 'js/page.js' %}"></script>

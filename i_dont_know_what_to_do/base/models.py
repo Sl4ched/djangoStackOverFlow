@@ -47,7 +47,7 @@ class Discuss(models.Model):
     title = models.CharField(max_length=300)
     body = models.TextField()
 
-    votes = models.IntegerField(null=True, blank=True)
+    votes = models.IntegerField(null=True, blank=True, default=0)
 
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
