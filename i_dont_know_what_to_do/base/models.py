@@ -40,12 +40,12 @@ def save_user_myuser(sender, instance, **kwargs):
 class Discuss(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
-    topics = models.ManyToManyField(Tag, related_name='topics')
+    topics = models.ManyToManyField(Tag, related_name='topics', verbose_name="Tags")
     views = models.ManyToManyField(User, related_name='viewed_users')
 
     is_watching_or_not = models.BooleanField(null=True, default=False)
-    title = models.CharField(max_length=300)
-    body = models.TextField()
+    title = models.CharField(max_length=300, verbose_name="Title")
+    body = models.TextField(verbose_name="What are the details of your problem?")
 
     votes = models.IntegerField(null=True, blank=True, default=0)
 
