@@ -484,6 +484,96 @@ a {
     cursor: pointer;
 }
 
+.farParentDiv ul li::marker {
+    font-size: 10px;
+}
+
+.info-create-discuss {
+    border-radius: 5px;
+    border: 1px solid hsl(209, 100%, 78%);
+    background-color: hsla(210, 79%, 76%, 0.15);
+    display: flex;
+    flex-flow: column;
+    gap: 10px;
+    padding: 25px;
+    max-width: 700px;
+}
+
+.form-create-discuss {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-create-discuss p {
+    display: flex;
+    flex-direction: column;
+    max-width: 710px;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid rgba(128, 128, 128, 0.24);
+    gap: 10px;
+
+}
+
+.form-create-discuss p label {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#id_title {
+    border: 1px solid rgba(128, 128, 128, 0.37);
+    border-radius: 5px;
+    padding: 8px 0 0 8px;
+    height: 34px;
+    resize: none;
+}
+
+#id_title:focus {
+    outline-color: rgba(27, 117, 207, 0.53);
+    box-shadow: 0 0 10px #1b75cf;
+}
+
+#id_title::placeholder {
+    color: rgba(128, 128, 128, 0.66);
+}
+
+#id_body {
+    border: 1px solid rgba(128, 128, 128, 0.37);
+    border-radius: 5px;
+    padding: 15px;
+    max-width: 700px;
+}
+
+#id_body:focus {
+    outline-color: rgba(27, 117, 207, 0.53);
+    box-shadow: 0 0 10px #1b75cf;
+}
+
+#id_topics {
+    border: 1px solid rgba(128, 128, 128, 0.37);
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+#id_topics:focus {
+    outline-color: rgba(27, 117, 207, 0.53);
+    box-shadow: 0 0 10px #1b75cf;
+}
+
+.discuss a.title {
+    color: #1b75cf;
+}
+.for-hover{
+    color: #babfc5;
+}
+.for-hover:hover {
+    color: white;
+    cursor: pointer;
+
+}
+
 @media (min-width: 650px) {
 
     .whole-tag-container {

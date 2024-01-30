@@ -76,7 +76,7 @@
                     <div style="color: #636b74;font-size: 12px">answered {{answer.created}}</div>
                     <div style="display:flex;gap: 5px">
                         <div style="background: black;height: 30px;width: 30px;border-radius: 4px"></div>
-                        <a>{{user.myuser.username}}</a>
+                        <a>{{answer.user.username}}</a>
                     </div>
                 </div>
 
@@ -94,6 +94,7 @@
 
             <textarea name="text-body"
                       id="text-area"
+                      required="required"
                       style="border-radius: 3px 3px 0 0;border-color: rgba(128,128,128,0.51);resize: vertical"
                       cols="85"
                       rows="10"></textarea>
